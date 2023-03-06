@@ -1,3 +1,11 @@
 Wallet Ethereum Address: 0x4E476F7FB84c785557cDECdbf8CADEbE8EA57C37
 Deploying DealRewarder...
 DealRewarder deployed to: 0xc924b81AF8E90fC2BD3913D7C8eE84f46Ab73a93
+
+0x942a156cd363CC04Eac8577a509D360eFb5453Fa
+
+-----
+string public text = "QmXNpGrjEJTNeoosHkEZsU9Lxw3sdPtpns9xdiFSMn5yEM"; 
+    bytes32 public stringInBytes32 = bytes32(bytes(text));
+
+    0x516d584e7047726a454a544e656f6f73486b455a7355394c7877337364507470
