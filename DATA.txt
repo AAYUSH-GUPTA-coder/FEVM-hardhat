@@ -1,0 +1,3 @@
+Wallet Ethereum Address: 0x4E476F7FB84c785557cDECdbf8CADEbE8EA57C37
+Deploying DealRewarder...
+DealRewarder deployed to: 0xc924b81AF8E90fC2BD3913D7C8eE84f46Ab73a93
