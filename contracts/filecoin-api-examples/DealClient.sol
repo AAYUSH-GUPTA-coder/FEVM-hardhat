@@ -1,8 +1,10 @@
 /**
- * Flow 
+ *                                      FLOW
  * makeDealProposal -> getDealProposal -> handle_filecoin_method Market Actor {MarketAPI} -> 
- * 
- * 
+ * authenticateMessage -> dealNotify
+ */
+
+ /** 
  * "makeDealProposal" is the entry point for a client trying to store data on filecoin, she will provide all details
  *  necessary for storing files. "makeDealProposal" function emits a event. This events is listened by Storage Providers. 
  * Give out metadata for SP to index the deal. Once the SP gets the event they can ask for the 'deal proposal details' using
@@ -14,11 +16,11 @@
  * "handle_filecoin_method" function.
  * 
  * now this "handle_filecoin_method" is a universal entry point for any "EVM based actor" for a call coming from a
- * built-in filecoin actor and it specifies a method in the params. Its primarily acts as a dispatcher to  what we would /
+ * built-in filecoin actor and it specifies a method in the params. Its primarily acts as a dispatcher to what we would
  * consider the proper apis for each of these different methods.
  * 
- * Public storage deals has two 
- * 
+ * Public storage deals has two callbacks into the contract 
+ * Authenticate Message and market deal notify
  * 
  */
 
@@ -229,6 +231,9 @@ contract DealClient {
         return serializeExtraParamsV1(deal.extra_params);
     }
 
+    /**
+     * @notice how you would vet the deal proposal coming from the SP and gives you the chance to either accept this deal or reject it.
+     */
     function authenticateMessage(bytes memory params) internal view {
         require(
             msg.sender == MARKET_ACTOR_ETH_ADDRESS,
@@ -252,6 +257,11 @@ contract DealClient {
 
     }
 
+
+    /**
+     * @notice this function basically means the deal proposal has passed all the validation in the storage market actor
+     * and is ready to fully published
+     */
     function dealNotify(bytes memory params) internal {
         require(
             msg.sender == MARKET_ACTOR_ETH_ADDRESS,
