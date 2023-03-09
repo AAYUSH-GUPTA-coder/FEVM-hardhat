@@ -1,13 +1,23 @@
 /**
  * Flow 
- * makeDealProposal -> getDealProposal
+ * makeDealProposal -> getDealProposal -> handle_filecoin_method Market Actor {MarketAPI} -> 
  * 
  * 
  * "makeDealProposal" is the entry point for a client trying to store data on filecoin, she will provide all details
  *  necessary for storing files. "makeDealProposal" function emits a event. This events is listened by Storage Providers. 
  * Give out metadata for SP to index the deal. Once the SP gets the event they can ask for the 'deal proposal details' using
- * "getDealProposal" function   
+ * "getDealProposal" function. "getDealProposal" function returns a CBOR encoded bytes of the protocol verison of deal 
+ * proposal struct.
  * 
+ * SP now has your deal request, once they do their validation on it and they want to make a deal. They will send a publish 
+ * deal message with the deal proposal to the market actor which will then call back into your contract through the 
+ * "handle_filecoin_method" function.
+ * 
+ * now this "handle_filecoin_method" is a universal entry point for any "EVM based actor" for a call coming from a
+ * built-in filecoin actor and it specifies a method in the params. Its primarily acts as a dispatcher to  what we would /
+ * consider the proper apis for each of these different methods.
+ * 
+ * Public storage deals has two 
  * 
  * 
  */
