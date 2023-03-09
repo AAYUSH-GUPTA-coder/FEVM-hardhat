@@ -9,3 +9,6 @@ string public text = "QmXNpGrjEJTNeoosHkEZsU9Lxw3sdPtpns9xdiFSMn5yEM";
     bytes32 public stringInBytes32 = bytes32(bytes(text));
 
     0x516d584e7047726a454a544e656f6f73486b455a7355394c7877337364507470
+
+
+"QmYrfgnxqwTUcPBoBr4h6Y7CSNq1rct7QcDeBsf859ejkP" ----> 0x516d597266676e78717754556350426f4272346836593743534e713172637437
