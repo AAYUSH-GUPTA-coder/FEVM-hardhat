@@ -152,6 +152,7 @@ contract DealClient {
 
     /**
      * @notice This is the entry point for a client trying to store data on filecoin
+     * @dev this function should be called by owner 
      */
     function makeDealProposal(
         DealRequest calldata deal
@@ -254,13 +255,15 @@ contract DealClient {
         require(proposal.verified_deal == req.verified_deal, "verified_deal param mismatch");
         require(bigIntToUint(proposal.storage_price_per_epoch) <= req.storage_price_per_epoch, "storage price greater than request amount");
         require(bigIntToUint(proposal.client_collateral) < req.client_collateral, "client collateral greater than request amount");
-
     }
 
 
     /**
      * @notice this function basically means the deal proposal has passed all the validation in the storage market actor
      * and is ready to fully published
+     * you can add more logic for final rejection of the deal
+     * @dev this function also gives you dealID for the final deal which is then stored on chain and can be used to query
+     * deal state. 
      */
     function dealNotify(bytes memory params) internal {
         require(
@@ -291,9 +294,12 @@ contract DealClient {
         pieceDeals[proposal.piece_cid.data] = mdnp.dealId;
     }
 
-    // addBalance funds the builtin storage market actor's escrow
-    // with funds from the contract's own balance
-    // @value - amount to be added in escrow in attoFIL
+
+    /**
+     * @notice addBalance funds the builtin storage market actor's escrow
+     * with funds from the contract's own balance
+     * @param value - amount to be added in escrow in attoFIL
+     */
     function addBalance(uint256 value) public {
         require(msg.sender == owner);
         MarketAPI.addBalance(getDelegatedAddress(address(this)), value);
@@ -326,6 +332,7 @@ contract DealClient {
     // If less than the given amount is available, the full escrow balance is withdrawn
     // @client - Eth address where the balance is withdrawn to. This can be the contract address or an external address
     // @value - amount to be withdrawn in escrow in attoFIL
+    /** */
     function withdrawBalance(
         address client,
         uint256 value
